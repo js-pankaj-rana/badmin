@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+<script type="text/javascript" src="js/libs/angular.min.js"></script>
+<script type="text/javascript" src="js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="js/app/jq.methods.js"></script>
+
+<script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
+</head>
+<body>
+ <nav class="navbar navbar-default" style="display:none;">
+     <div class="navbar-header"> <a class="navbar-brand" href="#">Admin Panel </a> </div>
+     <ul class="nav navbar-nav">
+       <li class="active"><a href="#">Dashboard</a></li>
+       <li><a href="#">Blogs</a></li>
+       <li><a href="#">Adding Blogs</a></li>
+       <li><a href="#">Run Batch Process</a></li>
+     </ul>
+     
+ </nav>
+
+ <div class="container" data-ng-app="LogIn">
+<div class="row">
+<div class="col-md-3 col-md-offset-4 col-sm-12 col-sm-offset-0" data-ng-controller="User">
+<form class="form-horizontal" data-ng-submit="onSubmit(LoginForm.$valid)" name="LoginForm" novalidate="novalidate">
+  <div class="form-group form-group-md">
+    <div class="col-sm-10 col-md-12">
+      <input class="form-control" data-ng-class=""
+       type="email"
+       id="formGroupInputLarge"
+       placeholder="User name"
+       data-ng-model="user.email"
+       name="useremail" required="required" />
+       <p class="help-block has-error"
+         ng-show="LoginForm.useremail.$error.required && (!LoginForm.$pristine || LoginForm.$submitted) ">
+          The field is required
+      </p>
+       <p class="help-block has-error" 
+        ng-show="LoginForm.useremail.$error.email && (!LoginForm.$pristine || LoginForm.$submitted)">
+        Please enter an email with at least @ symbol
+      </p>
+      
+    </div>
+  </div>
+  <div class="form-group form-group-md">
+    <div class="col-sm-10 col-md-12">
+      <input class="form-control" type="password" 
+      id="formGroupInputSmall" placeholder="Password" 
+      data-ng-model="user.password"
+      name="userpwd"
+      required="required"  / >
+      <p class="help-block has-error" ng-show="LoginForm.userpwd.$error.required && (!LoginForm.$pristine || LoginForm.$submitted) ">
+        The field is required
+      </p>
+    </div>
+  </div>
+  <div class="form-group form-group-md ">
+  	<div class="col-sm-10 col-md-12 center-block">
+  	<button type="submit" class="btn btn-danger center-block">Submit</button>
+    </div>
+    </div>
+    <pre>
+      {{LoginForm | json}}
+    </pre>
+</form>
+
+<!-- 
+<div class="row" ng-app="Registration">
+<div class="col-md-6 col-md-offset-3 col-sm-12 col-sm-offset-0" data-ng-controller="User">
+<form class="form-horizontal" data-ng-submit="submit()">
+  <div class="form-group form-group-md">
+    <div class="col-sm-10 col-md-6">
+      <input class="form-control" type="text" id="formGroupInputLarge4" name="username" placeholder="User name" data-ng-model="name" required   data-ng-model-options="{ debounce: 100 }" data-ui-validate="{blacklist: 'notBlackListed($value)'}" data-ui-validate-async="{alreadyExists: 'doesNotExist($modelValue)'}">
+     validation on user name field
+     <p ng-show="form.username.$invalid && form.username.$dirty" class="ng-hide">
+       User name is required
+     </p>
+     validation on user name field with blacklisted
+     <p ng-show="form.username.$error.blacklist" class="ng-hide">
+       User name is required
+     </p>
+     
+         
+    </div>
+     <div class="col-sm-10 col-md-6">
+      <input class="form-control" type="email" id="formGroupInputLarge" placeholder="Email" data-ng-model="user.email">
+    </div>
+    
+  </div>
+  <div class="form-group form-group-md">
+  <div class="col-sm-10 col-md-6">
+      <input class="form-control" type="mobile" maxlength="10" id="formGroupInputLarge1" placeholder="mobile" data-ng-model="user.mobile" required>
+    </div>
+    <div class="col-sm-10 col-md-6">
+      <input class="form-control" type="password" id="formGroupInputSmall2" placeholder="Password" ng-model="user.password">
+    </div>
+  </div>
+  <div class="form-group form-group-md ">
+    <div class="col-sm-10 col-md-12 center-block">
+    <button type="submit" class="btn btn-danger center-block">Submit</button>
+    </div>
+    </div>
+</form>
+</div>
+</div>-->
+<script src="js/app/validation.js"></script>
+<script> 
+/*var app = angular.module("LogIn", []);
+app.controller("User", function($scope) {
+  $scope.user = {
+	 
+	  };
+  $scope.wasSubmitted = false;
+
+  $scope.submit = function() {
+    $scope.wasSubmitted = true;
+	console.log($scope.user);
+  };
+});
+
+var app2 = angular.module("Registration", ["ui.directives"]);
+app2.controller("User", function($scope, $timeout, $q) {
+  $scope.notBlackListed = function(value) {
+		var blacklist = ['idiot','loser'];
+		return $scope.blacklist.indexOf(value) === -1;
+   };
+
+	$scope.doesNotExist = function(value) {
+      var db = ['idiot','loser'];
+     	// Simulates an asyncronous trip to the server.
+     	return $q(function(resolve, reject) {
+        $timeout(function() {
+                 if (db.indexOf(value) < 0) {
+                   resolve();
+                } else {
+                    reject();
+                 }
+       	   }, 500);
+        });
+       };
+
+	  $scope.submit = function() {
+		$scope.wasSubmitted = true;
+		console.log($scope.user);
+	  };
+
+});*/
+
+</script>
+<style type="text/css">
+  .has-error{color:rgba(192,20,20,1);}
+
+</style>
+<script type="text/javascript" src="js/app/jq.ready.js"></script>
+</body>
+</html>
